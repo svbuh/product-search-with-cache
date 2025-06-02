@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baumarkt Produktsuche - KI-unterstützt</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔨 Baumarkt Produktsuche</h1>
+            <p class="subtitle">Intelligente Suche mit KI-Unterstützung</p>
+        </header>
+
+        <main>
+            <!-- Search Section -->
+            <section class="search-section">
+                <form id="searchForm">
+                    <div class="search-input-group">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Suche nach Produkten... (z.B. 'Dübel für Betonwand')"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="search-btn">Suchen</button>
+                    </div>
+                    
+                    <div class="search-options">
+                        <label>
+                            <input type="checkbox" id="useAI" checked>
+                            <span>KI-Suche aktivieren</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="inStock">
+                            <span>Nur verfügbare Produkte</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="noCache">
+                            <span>Cache umgehen</span>
+                        </label>
+                    </div>
+
+                    <div class="filter-section">
+                        <select id="categoryFilter">
+                            <option value="">Alle Kategorien</option>
+                            <option value="Werkzeuge">Werkzeuge</option>
+                            <option value="Befestigungstechnik">Befestigungstechnik</option>
+                            <option value="Elektro">Elektro</option>
+                            <option value="Garten">Garten</option>
+                            <option value="Farben">Farben</option>
+                            <option value="Baustoffe">Baustoffe</option>
+                        </select>
+                        
+                        <div class="price-filter">
+                            <input type="number" id="minPrice" placeholder="Min €" min="0">
+                            <span>-</span>
+                            <input type="number" id="maxPrice" placeholder="Max €" min="0">
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="suggestions" class="suggestions"></div>
+            </section>
+
+            <!-- Query Enhancement Info -->
+            <div id="queryEnhancement" class="query-enhancement" style="display: none;">
+                <h3>🤖 KI-Suchverbesserung</h3>
+                <p><strong>Original:</strong> <span id="originalQuery"></span></p>
+                <p><strong>Erweitert:</strong> <span id="enhancedQuery"></span></p>
+                <p><strong>Kategorien:</strong> <span id="detectedCategories"></span></p>
+                <p><strong>Suchintention:</strong> <span id="searchIntent"></span></p>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Suche läuft...</p>
+            </div>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section" style="display: none;">
+                <div class="results-header">
+                    <h2>Suchergebnisse</h2>
+                    <p id="resultCount"></p>
+                </div>
+                
+                <div id="productList" class="product-list"></div>
+            </section>
+
+            <!-- No Results -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <p>😕 Keine Produkte gefunden. Versuchen Sie es mit anderen Suchbegriffen.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by OpenSearch, Redis & Google Gemini</p>
+            <a href="/api/health" target="_blank">System Status</a> | 
+            <a href="/api/cache/stats" target="_blank">Cache Stats</a>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

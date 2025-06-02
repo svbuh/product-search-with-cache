@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1
+    container_name: product-search-opensearch
+    environment:
+      - cluster.name=product-search-cluster
+      - node.name=opensearch-node1
+      - discovery.seed_hosts=opensearch-node1
+      - cluster.initial_cluster_manager_nodes=opensearch-node1
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - plugins.security.disabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    ports:
+      - 9201:9200
+      - 9301:9600
+    networks:
+      - product-search-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: product-search-redis
+    command: redis-server --appendonly yes
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - product-search-network
+
+volumes:
+  opensearch-data:
+  redis-data:
+
+networks:
+  product-search-network:
+    driver: bridge
